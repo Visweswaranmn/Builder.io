@@ -28,4 +28,10 @@ export default defineConfig({
       },
     },
   },
+  preview: {
+    // Vite 6 rejects unrecognized Host headers by default; Railway's proxy
+    // forwards the public domain as the Host, so it must be allow-listed
+    // for `vite preview` (used as the production server) to accept requests.
+    allowedHosts: true,
+  },
 });
