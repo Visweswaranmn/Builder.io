@@ -1,9 +1,12 @@
-# CPMS — Construction Project Management System
+# BUILDER.IO — Construction Project Management System
+
+**🔗 Live app: https://cpms-client-production.up.railway.app**
 
 A full-stack management system for construction companies: projects, employees,
 tasks, materials, vendors, daily site reports, finance, invoicing, and analytics.
 
-Built as a monorepo with a **React** frontend and an **Express + MongoDB** backend.
+Built as a monorepo with a **React** frontend and an **Express + MongoDB** backend,
+deployed on [Railway](https://railway.app).
 
 ## Tech stack
 
