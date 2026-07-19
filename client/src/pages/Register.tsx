@@ -1,11 +1,14 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Building2 } from 'lucide-react';
+import { Building2, Sparkles } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { api } from '@/lib/axios';
 import { TextField } from '@/components/ui/FormField';
 import Button from '@/components/ui/Button';
 import Alert from '@/components/ui/Alert';
+
+const DEMO_EMAIL = 'admin@gmail.com';
+const DEMO_PASSWORD = '12345678';
 
 export default function Register() {
   const { login } = useAuth();
@@ -15,6 +18,7 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [demoSubmitting, setDemoSubmitting] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -28,6 +32,19 @@ export default function Register() {
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function handleDemoLogin() {
+    setError('');
+    setDemoSubmitting(true);
+    try {
+      await login(DEMO_EMAIL, DEMO_PASSWORD);
+      navigate('/dashboard', { replace: true });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed');
+    } finally {
+      setDemoSubmitting(false);
     }
   }
 
@@ -65,8 +82,26 @@ export default function Register() {
 
         {error && <Alert tone="error">{error}</Alert>}
 
-        <Button type="submit" loading={submitting} className="w-full">
+        <Button type="submit" loading={submitting} disabled={demoSubmitting} className="w-full">
           {submitting ? 'Creating account…' : 'Create account'}
+        </Button>
+
+        <div className="flex items-center gap-3 pt-1">
+          <div className="h-px flex-1 bg-slate-200" />
+          <span className="text-xs text-ink-faint">or</span>
+          <div className="h-px flex-1 bg-slate-200" />
+        </div>
+
+        <Button
+          type="button"
+          variant="secondary"
+          loading={demoSubmitting}
+          disabled={submitting}
+          onClick={handleDemoLogin}
+          icon={<Sparkles className="h-4 w-4" />}
+          className="w-full"
+        >
+          {demoSubmitting ? 'Signing in…' : 'Demo Login (for Recruiters)'}
         </Button>
       </form>
 
