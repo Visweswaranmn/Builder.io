@@ -41,3 +41,8 @@ tmp/
 
 # Locally-stored media uploads (local-disk fallback when Cloudinary isn't configured)
 server/uploads/
+
+# Railway CLI local tooling/config artifacts
+.railway/
+.railway-config-pull-*/
+.agents/
